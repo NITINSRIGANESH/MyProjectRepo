@@ -1,26 +1,18 @@
-# Use the official Node.js image as a base
-FROM node:14
+# Use official Node.js image as a base
+FROM node:14-alpine
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package.json and install dependencies
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application files
 COPY . .
 
-# Build the application
-RUN npm run build
-
-# Install serve to serve the build
-RUN npm install -g serve
-
-# Expose port 80
+# Expose the application on port 80
 EXPOSE 80
 
 # Command to run the application
-CMD ["serve", "-s", "build", "-l", "80"]
+CMD ["npm", "start"]
